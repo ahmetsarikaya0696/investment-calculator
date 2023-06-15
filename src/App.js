@@ -7,7 +7,6 @@ function App() {
   const [data, setData] = useState([]);
 
   const calculateHandler = (userInput) => {
-    console.log(userInput);
     const yearlyData = [];
     let currentSavings = +userInput["current-savings"];
     const yearlyContribution = +userInput["yearly-contribution"];
@@ -22,11 +21,12 @@ function App() {
       currentSavings += yearlyInterest + yearlyContribution;
       totalInterest += yearlyInterest;
       yearlyData.push({
+        id : Math.random(),
         year: i + 1,
         yearlyInterest: yearlyInterest,
         savingsEndOfYear: currentSavings,
         totalInterest: totalInterest,
-        investedCapital: investedCapital
+        investedCapital: investedCapital,
       });
     }
 

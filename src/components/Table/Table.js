@@ -20,7 +20,7 @@ const Table = (props) => {
           </thead>
           <tbody>
             {datas.map((data) => (
-              <tr>
+              <tr key={data.id}>
                 <td>{data.year}</td>
                 <td>{data.savingsEndOfYear + " $"}</td>
                 <td>{data.yearlyInterest + " $"}</td>

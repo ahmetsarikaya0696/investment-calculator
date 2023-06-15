@@ -31,12 +31,19 @@ const Form = (props) => {
       "current-savings": currentSavings,
       "yearly-contribution": yearlySavings,
       "expected-return": expectedInterest,
-      "duration": investmentDuration
+      duration: investmentDuration,
     });
   };
 
+  const resetHandler = () => {
+    setCurrentSavings(0);
+    setExpectedInterest(0);
+    setInvestmentDuration(0);
+    setYearlySavings(0);
+  };
+
   return (
-    <form className={styles.form} onSubmit={submitHandler}>
+    <form className={styles.form} onSubmit={submitHandler} onReset={resetHandler}>
       <div className={styles["input-group"]}>
         <p>
           <label htmlFor="current-savings">Current Savings ($)</label>
