@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./Form.module.css";
 import Button from "../UI/Button";
 
-const Form = () => {
+const Form = (props) => {
   const [currentSavings, setCurrentSavings] = useState(0);
   const [yearlySavings, setYearlySavings] = useState(0);
   const [expectedInterest, setExpectedInterest] = useState(0);
@@ -22,10 +22,21 @@ const Form = () => {
 
   const investmentDurationChangeHandler = (event) => {
     setInvestmentDuration(+event.target.value);
-  }
+  };
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+
+    props.onCalculate({
+      "current-savings": currentSavings,
+      "yearly-contribution": yearlySavings,
+      "expected-return": expectedInterest,
+      "duration": investmentDuration
+    });
+  };
 
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={submitHandler}>
       <div className={styles["input-group"]}>
         <p>
           <label htmlFor="current-savings">Current Savings ($)</label>
@@ -69,10 +80,10 @@ const Form = () => {
         </p>
       </div>
       <p className={styles.actions}>
-        <Button type="reset" style="buttonAlt">
+        <Button type="reset" btnStyle="buttonAlt">
           Reset
         </Button>
-        <Button type="submit" style="button">
+        <Button type="submit" btnStyle="button">
           Calculate
         </Button>
       </p>

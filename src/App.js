@@ -1,40 +1,43 @@
 import Title from "./components/Title/Title";
 import Form from "./components/Form/Form";
 import Table from "./components/Table/Table";
+import { useState } from "react";
 
 function App() {
+  const [data, setData] = useState([]);
+
   const calculateHandler = (userInput) => {
-    // Should be triggered when form is submitted
-    // You might not directly want to bind it to the submit event on the form though...
-
-    const yearlyData = []; // per-year results
-
-    let currentSavings = +userInput["current-savings"]; // feel free to change the shape of this input object!
-    const yearlyContribution = +userInput["yearly-contribution"]; // as mentioned: feel free to change the shape...
+    console.log(userInput);
+    const yearlyData = [];
+    let currentSavings = +userInput["current-savings"];
+    const yearlyContribution = +userInput["yearly-contribution"];
     const expectedReturn = +userInput["expected-return"] / 100;
     const duration = +userInput["duration"];
 
-    // The below code calculates yearly results (total savings, interest etc)
+    let totalInterest = 0;
+    let investedCapital = currentSavings;
     for (let i = 0; i < duration; i++) {
       const yearlyInterest = currentSavings * expectedReturn;
+      investedCapital += yearlyContribution;
       currentSavings += yearlyInterest + yearlyContribution;
+      totalInterest += yearlyInterest;
       yearlyData.push({
-        // feel free to change the shape of the data pushed to the array!
         year: i + 1,
         yearlyInterest: yearlyInterest,
         savingsEndOfYear: currentSavings,
-        yearlyContribution: yearlyContribution,
+        totalInterest: totalInterest,
+        investedCapital: investedCapital
       });
     }
 
-    // do something with yearlyData ...
+    setData([...yearlyData]);
   };
 
   return (
     <div>
       <Title />
-      <Form />
-      <Table />
+      <Form onCalculate={calculateHandler} />
+      <Table data={data} />
     </div>
   );
 }
